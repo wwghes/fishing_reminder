@@ -33,6 +33,9 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
       - name: Install dependencies
-        run: pip install zhdate
+        run: |
+          pip install zhdate
+          pip install requests
+          pip install json
       - name: run main function
         run: python index.py
