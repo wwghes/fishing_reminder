@@ -202,4 +202,4 @@ def main_handler():
     # get_one_image()
     print("执行完成")
 
-main_handle()
+main_handler()
