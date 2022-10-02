@@ -36,6 +36,5 @@ jobs:
         run: |
           pip install zhdate
           pip install requests
-          pip install json
       - name: run main function
         run: python index.py
