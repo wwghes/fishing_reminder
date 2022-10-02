@@ -32,20 +32,7 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
-    
-    
-    
-#     steps:
-#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#       - uses: actions/checkout@v3
-
-#       - name: Set up Python
-#         uses: actions/setup-python@v4
-#         with:
-#           python-version: '3.7'
-
-#       - name: Install dependencies
-#           pip install zhdate
-
-#       - name: run index
-#           python index.py
+      - name: Install dependencies
+        run: pip install zhdate
+      - name: run main function
+        run: python index.py
