@@ -196,10 +196,10 @@ def send_msg():
     print(res.text)
 
 
-def main_handler(event, context):
+def main_handler():
     send_msg()
     # get_one_text() 测试一言句子时使用
     # get_one_image()
-    print("Received event: " + json.dumps(event, indent=2))
-    print("Received context: " + str(context))
-    return ("执行完成")
+    print("执行完成")
+
+main_handle()
