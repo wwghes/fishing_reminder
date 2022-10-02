@@ -38,5 +38,5 @@ jobs:
           pip install requests
       - name: run main function
         env: 
-          WECHATWORK_WEBHOOK: ${{WECHATWORK_WEBHOOK}}
+          WECHATWORK_WEBHOOK: ${{secrets.WECHATWORK_WEBHOOK}}
         run: python index.py
