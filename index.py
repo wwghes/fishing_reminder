@@ -4,6 +4,7 @@ import json
 from zhdate import ZhDate as lunar_date
 
 
+WEBHOOK = os.environ.get('WECHATWORK_WEBHOOK')
 def get_week_day(date):
     week_day_dict = {
         0: '星期一',
@@ -152,7 +153,7 @@ def send_msg():
         states.append({"keyname": keyname, "value": value})
 
     headers = {"Content-Type": "text/plain"}
-    send_url = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=dbd6fb2c-f269-4d2b-9522-6b91612c676a"
+    send_url = WEBHOOK
     send_data = {
         "msgtype": "template_card",
         "template_card": {
