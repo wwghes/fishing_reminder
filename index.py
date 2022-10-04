@@ -140,7 +140,6 @@ def get_one_image():
 
 def send_msg():
     today = datetime.date.today()
-    print(today)
     week_day_ = get_week_day(today)
     time_data = time_parse(today)
 
@@ -194,7 +193,7 @@ def send_msg():
         }
     }
 
-#     res = requests.post(url=send_url, headers=headers, json=send_data)
+    res = requests.post(url=send_url, headers=headers, json=send_data)
     print(res.text)
 
 
