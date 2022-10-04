@@ -3,7 +3,9 @@ import requests
 import json
 import os
 from zhdate import ZhDate as lunar_date
+
 WEBHOOK = os.environ.get('WECHATWORK_WEBHOOK')
+
 
 def get_week_day(date):
     week_day_dict = {
@@ -17,6 +19,7 @@ def get_week_day(date):
     }
     day = date.weekday()
     return week_day_dict[day]
+
 
 def time_parse(today):
     # print(today.year, today.month, today.day)
@@ -81,10 +84,6 @@ def time_parse(today):
     # print("距离周末: ", 5 - today.weekday())
 
     time_ = [
-        # {
-        #     "v": 5 - today.weekday(),
-        #     "title": "周末"
-        # },  # 距离周末
         {
             "v": distance_year,
             "title": "元旦节"
@@ -105,18 +104,26 @@ def time_parse(today):
             "v": distance_5_5,
             "title": "端午节"
         },  # 距离端午
-        #{
-        #    "v": distance_8_15,
-        #    "title": "中秋节"
-        #},  # 距离中秋
+        {
+            "v": distance_8_15,
+            "title": "中秋节"
+        },  # 距离中秋
         {
             "v": distance_10_1,
             "title": "国庆节"
         },  # 距离国庆
     ]
 
+    # 企业微信卡片只支持显示6个，所以移除一个距离最远的假日
+    distance_list = [
+        distance_big_year, distance_5_5, distance_8_15, distance_year,
+        distance_4_5, distance_5_1, distance_10_1
+    ]
+    the_distance_hide = distance_list.index(max(distance_list))
+    time_.pop(the_distance_hide)
     time_ = sorted(time_, key=lambda x: x['v'], reverse=False)
     return time_
+
 
 def get_one_text():
     # 文档 https://gushi.ci/ 和 https://www.jinrishici.com/
@@ -126,6 +133,7 @@ def get_one_text():
     res = requests.post(url=send_url, headers=headers)
 
     return json.loads(res.text).get('content')
+
 
 def get_one_image():
     # https://api.ixiaowai.cn
@@ -169,24 +177,22 @@ def send_msg():
                 # "url": one_image
             },
             "vertical_content_list": [{
-                "title":
-                "一起去摸鱼吗？虽然被抓住就是一整天的禁闭，但鱼很好吃，所以值得！!",
-                "desc":
-                "\n"+one_text+"\n"
+                "title": "一起去摸鱼吗？虽然被抓住就是一整天的禁闭，但鱼很好吃，所以值得！!",
+                "desc": "\n" + one_text + "\n"
             }],
             "horizontal_content_list":
             states,
-            "jump_list":[
+            "jump_list": [
                 {
-                    "type":1,
-                    "url":"https://weather.com/zh-CN/weather/today/l/24.27,116.13?par=apple_todayosx",
-                    "title":"🐟🐟🐟🐟苹果天气🐟🐟🐟🐟"
+                    "type": 1,
+                    "url":
+                    "https://weather.com/zh-CN/weather/today/l/24.27,116.13?par=apple_todayosx",
+                    "title": "🐟🐟🐟🐟苹果天气🐟🐟🐟🐟"
                 },
             ],
             "card_action": {
                 "type": 1,
-                "url":
-                "https://www.google.com.hk/search?q="+one_text,
+                "url": "https://www.google.com.hk/search?q=" + one_text,
                 "appid": "APPID",
                 "pagepath": "PAGEPATH"
             }
@@ -201,6 +207,9 @@ def main_handler():
     send_msg()
     # get_one_text() 测试一言句子时使用
     # get_one_image()
-    print("执行完成")
+    # print("Received event: " + json.dumps(event, indent=2))
+    # print("Received context: " + str(context))
+    return ("执行完成")
+
 
 main_handler()
