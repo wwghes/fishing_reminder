@@ -35,80 +35,30 @@ def time_parse(today):
     # print("劳动时间: ", f"{today.year+1}-05-01")
 
     # 距离大年
-    distance_big_year = (lunar_date(today.year, 1, 1).to_datetime().date() -
-                         today).days
-    distance_big_year = distance_big_year if distance_big_year > 0 else (
-        lunar_date(today.year + 1, 1, 1).to_datetime().date() - today).days
+    distance_big_year = calculate_distance(today=today, m=1, d=1, lunar=True)
     # 距离元宵
-    distance_1_15 = (lunar_date(today.year, 1, 15).to_datetime().date() -
-                     today).days
-    distance_1_15 = distance_1_15 if distance_1_15 > 0 else (
-        lunar_date(today.year + 1, 1, 15).to_datetime().date() - today).days
+    distance_1_15 = calculate_distance(today=today, m=1, d=15, lunar=True)
     # 距离端午
-    distance_5_5 = (lunar_date(today.year, 5, 5).to_datetime().date() -
-                    today).days
-    distance_5_5 = distance_5_5 if distance_5_5 > 0 else (
-        lunar_date(today.year + 1, 5, 5).to_datetime().date() - today).days
+    distance_5_5 = calculate_distance(today=today, m=5, d=5, lunar=True)
     # 距离中秋
-    distance_8_15 = (lunar_date(today.year, 8, 15).to_datetime().date() -
-                     today).days
-    distance_8_15 = distance_8_15 if distance_8_15 > 0 else (
-        lunar_date(today.year + 1, 8, 15).to_datetime().date() - today).days
+    distance_8_15 = calculate_distance(today=today, m=8, d=15, lunar=True)
     # 距离重阳
-    distance_9_9 = (lunar_date(today.year, 9, 9).to_datetime().date() -
-                    today).days
-    distance_9_9 = distance_9_9 if distance_9_9 > 0 else (
-        lunar_date(today.year + 1, 9, 9).to_datetime().date() - today).days
+    distance_9_9 = calculate_distance(today=today, m=9, d=9, lunar=True)
 
     # 距离元旦
-    distance_year = (
-        datetime.datetime.strptime(f"{today.year}-01-01", "%Y-%m-%d").date() -
-        today).days
-    distance_year = distance_year if distance_year > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-01-01",
-                                   "%Y-%m-%d").date() - today).days
+    distance_year = calculate_distance(today=today, m='01', d='01')
     # 距离妇女
-    distance_3_8 = (
-        datetime.datetime.strptime(f"{today.year}-03-08", "%Y-%m-%d").date() -
-        today).days
-    distance_3_8 = distance_3_8 if distance_3_8 > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-03-08",
-                                   "%Y-%m-%d").date() - today).days
+    distance_3_8 = calculate_distance(today=today, m='03', d='08')
     # 距离清明
-    distance_4_5 = (
-        datetime.datetime.strptime(f"{today.year}-04-05", "%Y-%m-%d").date() -
-        today).days
-    distance_4_5 = distance_4_5 if distance_4_5 > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-04-05",
-                                   "%Y-%m-%d").date() - today).days
+    distance_4_5 = calculate_distance(today=today, m='04', d='05')
     # 距离劳动节
-    distance_5_1 = (
-        datetime.datetime.strptime(f"{today.year}-05-01", "%Y-%m-%d").date() -
-        today).days
-    distance_5_1 = distance_5_1 if distance_5_1 > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-05-01",
-                                   "%Y-%m-%d").date() - today).days
-    # 距离劳动节
-    distance_6_1 = (
-        datetime.datetime.strptime(f"{today.year}-06-01", "%Y-%m-%d").date() -
-        today).days
-    distance_6_1 = distance_6_1 if distance_6_1 > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-06-01",
-                                   "%Y-%m-%d").date() - today).days
+    distance_5_1 = calculate_distance(today=today, m='05', d='01')
+    # 距离儿童节
+    distance_6_1 = calculate_distance(today=today, m='06', d='01')
     # 距离国庆节
-    distance_10_1 = (
-        datetime.datetime.strptime(f"{today.year}-10-01", "%Y-%m-%d").date() -
-        today).days
-    distance_10_1 = distance_10_1 if distance_10_1 > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-10-01",
-                                   "%Y-%m-%d").date() - today).days
+    distance_10_1 = calculate_distance(today=today, m='10', d='01')
     # 距离圣诞节
-    distance_12_25 = (
-        datetime.datetime.strptime(f"{today.year}-12-25", "%Y-%m-%d").date() -
-        today).days
-    distance_12_25 = distance_12_25 if distance_12_25 > 0 else (
-        datetime.datetime.strptime(f"{today.year + 1}-12-25",
-                                   "%Y-%m-%d").date() - today).days
+    distance_12_25 = calculate_distance(today=today, m='12', d='25')
 
     time_ = [
         {
@@ -168,6 +118,20 @@ def time_parse(today):
 
     print(time_)
     return time_
+
+
+def calculate_distance(today, m, d, lunar=False):
+    if lunar:
+        distance = (lunar_date(today.year, m, d).to_datetime().date() -
+                    today).days
+        distance = distance if distance > 0 else (
+            lunar_date(today.year + 1, m, d).to_datetime().date() - today).days
+    else:
+        distance = (datetime.datetime.strptime(f"{today.year}-{m}-{d}",
+                                               "%Y-%m-%d").date() - today).days
+        distance = distance if distance > 0 else (datetime.datetime.strptime(
+            f"{today.year + 1}-{m}-{d}", "%Y-%m-%d").date() - today).days
+    return distance
 
 
 def get_one_text():
