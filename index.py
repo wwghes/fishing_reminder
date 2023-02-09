@@ -5,8 +5,6 @@ import os
 from zhdate import ZhDate as lunar_date
 
 WEBHOOK = os.environ.get('WECHATWORK_WEBHOOK')
-SE = os.environ.get('SE_WEATHER')
-print(SE)
 
 def get_week_day(date):
     week_day_dict = {
@@ -159,7 +157,7 @@ def send_msg():
 
     headers = {"Content-Type": "text/plain"}
     send_url = WEBHOOK
-    weather_se = SE
+
     send_data = {
         "msgtype": "template_card",
         "template_card": {
@@ -182,8 +180,8 @@ def send_msg():
             "jump_list": [
                 {
                     "type": 1,
-                    "url": "https://caiyunapp.com/wx_share/?#" + weather_se,
-                    "title": "🐟🐟彩云天气🐟🐟"
+                    "url": "https://h5.caiyunapp.com/h5",
+                    "title": "🐟🐟🐟彩云天气🐟🐟🐟"
                 },
             ],
             "card_action": {
