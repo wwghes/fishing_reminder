@@ -158,6 +158,7 @@ def send_msg():
 
     headers = {"Content-Type": "text/plain"}
     send_url = WEBHOOK
+    weather_se = SE
     send_data = {
         "msgtype": "template_card",
         "template_card": {
@@ -180,8 +181,8 @@ def send_msg():
             "jump_list": [
                 {
                     "type": 1,
-                    "url": f"https://caiyunapp.com/wx_share/?#{SE}",
-                    "title": "🐟🐟🐟🐟彩云天气🐟🐟🐟🐟"
+                    "url": "https://caiyunapp.com/wx_share/?#" + weather_se,
+                    "title": "🐟🐟彩云天气🐟🐟"
                 },
             ],
             "card_action": {
