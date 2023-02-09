@@ -5,7 +5,7 @@ import os
 from zhdate import ZhDate as lunar_date
 
 WEBHOOK = os.environ.get('WECHATWORK_WEBHOOK')
-
+SE = os.environ.get('SE_WEATHER')
 
 def get_week_day(date):
     week_day_dict = {
@@ -181,8 +181,8 @@ def send_msg():
                 {
                     "type": 1,
                     "url":
-                    "https://weather.com/zh-CN/weather/today/l/24.27,116.13?par=apple_todayosx",
-                    "title": "🐟🐟🐟🐟苹果天气🐟🐟🐟🐟"
+                    "https://caiyunapp.com/wx_share/?#" + SE,
+                    "title": "🐟🐟🐟🐟彩云天气🐟🐟🐟🐟"
                 },
             ],
             "card_action": {
