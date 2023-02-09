@@ -39,4 +39,5 @@ jobs:
       - name: run main function
         env: 
           WECHATWORK_WEBHOOK: ${{secrets.WECHATWORK_WEBHOOK}}
+          SE_WEATHER: ${{secrets.SE_WEATHER}}
         run: python index.py
