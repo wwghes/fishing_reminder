@@ -187,7 +187,7 @@ def send_msg():
             ],
             "card_action": {
                 "type": 1,
-                "url": "https://www.google.com.hk/search?q=" + one_text,
+                "url": "https://so.gushiwen.cn/search.aspx?value=" + one_text + "&valuej=" + one_text[0],
                 "appid": "APPID",
                 "pagepath": "PAGEPATH"
             }
