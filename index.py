@@ -180,8 +180,7 @@ def send_msg():
             "jump_list": [
                 {
                     "type": 1,
-                    "url":
-                    "https://caiyunapp.com/wx_share/?#" + SE,
+                    "url": f"https://caiyunapp.com/wx_share/?#{SE}",
                     "title": "🐟🐟🐟🐟彩云天气🐟🐟🐟🐟"
                 },
             ],
