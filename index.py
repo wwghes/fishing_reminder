@@ -39,6 +39,8 @@ def time_parse(today):
     distance_1_15 = calculate_distance(today=today, m=1, d=15, lunar=True)
     # 距离端午
     distance_5_5 = calculate_distance(today=today, m=5, d=5, lunar=True)
+    # 距离中元
+    distance_7_15 = calculate_distance(today=today, m=7, d=15, lunar=True)
     # 距离中秋
     distance_8_15 = calculate_distance(today=today, m=8, d=15, lunar=True)
     # 距离重阳
@@ -91,6 +93,10 @@ def time_parse(today):
         {
             "v": distance_6_1,
             "title": "巨婴节"
+        },
+        {
+            "v": distance_7_15,
+            "title": "中元节"
         },
         {
             "v": distance_8_15,
