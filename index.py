@@ -170,7 +170,7 @@ def send_msg():
             "card_type":
             "news_notice",
             "main_title": {
-                "title": "劝摸",
+                "title": "浮世三千",
                 "desc":
                 f"今天是 {today.year}年{today.month}月{today.day}日 {week_day_}",
             },
@@ -178,7 +178,7 @@ def send_msg():
                 "url": "https://i.loli.net/2020/11/18/3zogEraBFtOm5nI.jpg",
             },
             "vertical_content_list": [{
-                "title": "一起去摸鱼吗？虽然被抓住就是一整天的禁闭，但鱼很好吃，所以值得！!",
+                "title": "年年今日，灯明如昼；原火不灭，愿人依旧。",
                 "desc": "\n" + one_text + "\n"
             }],
             "horizontal_content_list":
