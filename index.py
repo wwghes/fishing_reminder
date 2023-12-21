@@ -35,7 +35,7 @@ def time_parse(today):
 
     # 距离大年
     distance_big_year = calculate_distance(today=today, m=1, d=1, lunar=True)
-    # 距离元宵
+    # 距离元夕
     distance_1_15 = calculate_distance(today=today, m=1, d=15, lunar=True)
     # 距离端午
     distance_5_5 = calculate_distance(today=today, m=5, d=5, lunar=True)
@@ -72,7 +72,7 @@ def time_parse(today):
         },
         {
             "v": distance_1_15,
-            "title": "元宵节"
+            "title": "元夕节"
         },
         {
             "v": distance_3_8,
