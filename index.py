@@ -144,7 +144,7 @@ def get_one_text():
 
     send_url = "https://v1.jinrishici.com/all.json"
     headers = {"Content-Type": "text/plain"}
-    res = requests.post(url=send_url, headers=headers)
+    res = requests.post(url=send_url, headers=headers, verify=False)
 
     return json.loads(res.text).get('content')
 
