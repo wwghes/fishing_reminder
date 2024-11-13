@@ -254,6 +254,7 @@ def send_msg_to_lank_bot():
     }
 
     headers = {"Content-Type": "application/json"}
+    print(WEBHOOK_LANK)
     send_url = WEBHOOK_LANK
     res = requests.post(url=send_url, headers=headers, json=send_data)
     print(res.text)
