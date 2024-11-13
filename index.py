@@ -4,7 +4,8 @@ import json
 import os
 from zhdate import ZhDate as lunar_date
 
-WEBHOOK = os.environ.get('WECHATWORK_WEBHOOK')
+WEBHOOK_WEBCHAT = os.environ.get('WECHATWORK_WEBHOOK')
+WEBHOOK_LANK = os.environ.get('LANK_WEBHOOK')
 
 def get_week_day(date):
     week_day_dict = {
@@ -33,6 +34,8 @@ def time_parse(today):
     # print("清明时间: ", f"{today.year+1}-04-05")
     # print("劳动时间: ", f"{today.year+1}-05-01")
 
+    # 距离除夕
+    distance_new_year_eve = calculate_distance(today=today, m=12, d=29, lunar=True)
     # 距离大年
     distance_big_year = calculate_distance(today=today, m=1, d=1, lunar=True)
     # 距离元夕
@@ -65,6 +68,10 @@ def time_parse(today):
         {
             "v": distance_year,
             "title": "元旦节"
+        },
+        {
+            "v": distance_new_year_eve,
+            "title": "除夕夜"
         },
         {
             "v": distance_big_year,
@@ -116,7 +123,7 @@ def time_parse(today):
         },
     ]
 
-    # 企业微信卡片只支持显示6个，所以移除距离较远的多余节日
+    # 企业微信卡片只支持显示6个，所以只能移除距离较远的多余节日
     time_ = sorted(time_, key=lambda x: x['v'], reverse=False)
     while len(time_) > 6:
         time_.pop()
@@ -149,7 +156,7 @@ def get_one_text():
     return json.loads(res.text).get('content')
 
 
-def send_msg():
+def send_msg_to_wechat_bot():
     today = datetime.date.today()
     week_day_ = get_week_day(today)
     time_data = time_parse(today)
@@ -162,7 +169,7 @@ def send_msg():
         states.append({"keyname": keyname, "value": value})
 
     headers = {"Content-Type": "text/plain"}
-    send_url = WEBHOOK
+    send_url = WEBHOOK_WEBCHAT
 
     send_data = {
         "msgtype": "template_card",
@@ -202,9 +209,60 @@ def send_msg():
     res = requests.post(url=send_url, headers=headers, json=send_data)
     print(res.text)
 
+def send_msg_to_lank_bot():
+    today = datetime.date.today()
+    week_day_ = get_week_day(today)
+    time_data = time_parse(today)
+    one_text = get_one_text()
+
+    states = []
+    for item in time_data:
+        keyname = f"🐟距离{item['title']}"
+        value = f"还有{item['v']}天"
+        states.append({"keyname": keyname, "value": value})
+
+    title = "浮世三千"
+    caiyunapp = "https://h5.caiyunapp.com/h5"
+    helloword = "年年今日，灯明如昼；原火不灭，愿人依旧。"
+    bannerImg = "img_v3_02gi_f0365316-ba7c-4617-ba52-a64be8c3fdag" # 图片 key，在飞书客户端搭建消息卡片时上传
+    state = []
+    for item in time_data:
+        keyname = f"🐟距离{item['title']}"
+        value = f"还有{item['v']}天"
+        state.append({"keyname": keyname, "value": value})
+
+    # 消息卡片方式发送，需要在飞书客户端搭建 https://open.feishu.cn/cardkit/editor?cardId=AAqC3w5HZXdoM&cardLocale=zh_cn
+    send_data = {
+        "msg_type": "interactive",
+        "card": json.dumps({
+            "type":"template",
+            "data":{
+                "template_id":"AAqC3w5HZXdoM",
+                "template_version_name":"1.0.0",
+                "template_variable": {
+                    "year": today.year,
+                    "month": today.month,
+                    "day": today.day,
+                    "week_day": week_day_,
+                    "one_text": one_text,
+                    "caiyunapp": caiyunapp,
+                    "helloword": helloword,
+                    "state":state
+                }
+            }
+        })
+    }
+
+    headers = {"Content-Type": "application/json"}
+    send_url = WEBHOOK_LANK
+    res = requests.post(url=send_url, headers=headers, json=send_data)
+    print(res.text)
+
+
 
 def main_handler():
-    send_msg()
+    send_msg_to_wechat_bot() # 发送到微信机器人
+    send_msg_to_lank_bot() # 发送到飞书机器人
     return ("执行完成")
 
 
