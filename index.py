@@ -6,6 +6,7 @@ from zhdate import ZhDate as lunar_date
 
 WEBHOOK_WEBCHAT = os.environ.get('WECHATWORK_WEBHOOK')
 WEBHOOK_LANK = os.environ.get('LANK_WEBHOOK')
+print("WEBHOOK_LANK", WEBHOOK_LANK)
 
 def get_week_day(date):
     week_day_dict = {
